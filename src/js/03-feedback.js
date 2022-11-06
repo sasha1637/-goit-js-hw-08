@@ -7,6 +7,8 @@
 //  message та їхніми поточними значеннями.
 // Зроби так, щоб сховище оновлювалось не частіше, ніж раз на 500 мілісекунд. Для цього додай до проекту
 //  і використовуй бібліотеку lodash.throttle.
+const throttle = require('lodash.throttle');
+
 const formRef = document.querySelector('.feedback-form');
 const formDataobjLocalStr=(JSON.parse(localStorage.getItem("feedback-form-state")))|| {email:"",message:""}
 
@@ -15,7 +17,7 @@ formRef.elements.message.value=formDataobjLocalStr.message;
 
 
 
-formRef.addEventListener('input',onFormInputSave);
+formRef.addEventListener('input',throttle(onFormInputSave,500));
 function onFormInputSave(e){
     e.preventDefault();
     const {email, message }=e.currentTarget;
